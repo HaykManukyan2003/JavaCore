@@ -20,8 +20,9 @@ public class CharArrayExample {
 
         //display true if array ends with ly, otherwise print false;
         char[] charArray3 = {'j', 'a', 'v', 'a', 'l', 'o', 'l', 'y' };
-        if (charArray3[charArray3.length - 2] == 'l' && charArray3[charArray3.length - 1] == 'y') System.out.println(true);
-        else System.out.println(false);
+        if (charArray3[charArray3.length - 2] == 'l' && charArray3[charArray3.length - 1] == 'y') {
+            System.out.println(true);
+        } else System.out.println(false);
 
         //print true if there is "b <something> b" in array;
         char[] bobArray = {'b', 'a', 'b', 'o', 'l', 'a'};
@@ -37,7 +38,9 @@ public class CharArrayExample {
         //if not an empty char, then print;
         char[] text = {' ', ' ', 'b', 'a', 'r', ' ', 'e', 'v', ' ', ' '};
         for (int k = 0; k < text.length; k++) {
-            if (text[k] != ' ') System.out.print(text[k]);
+            if (text[k] != ' ') {
+                System.out.print(text[k]);
+            }
         }
         System.out.println();
 
