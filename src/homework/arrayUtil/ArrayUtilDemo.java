@@ -6,8 +6,21 @@ public class ArrayUtilDemo {
 
         ArrayUtil arrayUtil = new ArrayUtil();
 
-        arrayUtil.arrayNumbersFromLargestToSmallest(new int[] {4, 33, 245, 55, 1, 2, 87});
-        arrayUtil.arrayNumbersFromSmallestToLargest(new int[]{44, 24, 76, 11, 3, 98});
+
+        int[] reserveArray = arrayUtil.arrayNumbersFromLargestToSmallest(new int[] {4, 33, 245, 55, 1, 2, 87});
+        for (int i : reserveArray) {
+            System.out.print(i + " ");
+        }
+
+        System.out.println();
+
+        int[] reserveArray2 = arrayUtil.arrayNumbersFromSmallestToLargest(new int[]{44, 24, 76, 11, 3, 98});
+        for (int k : reserveArray2) {
+            System.out.print(k + " ");
+        }
+
+        System.out.println();
+
         arrayUtil.printArraysEvenAndOddNumbers(new int[]{2, 3, 65, 44, 23, 44, 66});
         arrayUtil.printElementsOfArray(new int[] {4, 22, 43, 55, 134, 90});
 
