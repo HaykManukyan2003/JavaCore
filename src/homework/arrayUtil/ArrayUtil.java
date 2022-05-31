@@ -2,7 +2,8 @@ package homework.arrayUtil;
 
 public class ArrayUtil {
 
-    public void arrayNumbersFromSmallestToLargest(int[] array) {
+    public int[] arrayNumbersFromSmallestToLargest(int[] array) {
+        System.out.print("from smallest to largest: ");
         int variable;
 
         for (int l = 0; l < array.length; l++) {
@@ -14,14 +15,11 @@ public class ArrayUtil {
                 }
             }
         }
-        System.out.print("From Smallest To Largest: ");
-        for (int k : array) {
-            System.out.print(k + " ");
-        }
-        System.out.print("\n");
+        return array;
     }
 
-    public void arrayNumbersFromLargestToSmallest(int[] array) {
+    public int[] arrayNumbersFromLargestToSmallest(int[] array) {
+        System.out.print("From Largest To Smallest: ");
         int variable;
 
         for (int l = 0; l < array.length; l++) {
@@ -33,11 +31,7 @@ public class ArrayUtil {
                 }
             }
         }
-        System.out.print("From Largest To Smallest: ");
-        for (int k : array) {
-            System.out.print(k + " ");
-        }
-        System.out.print("\n");
+        return array;
     }
 
     public int biggestNumInArray(int[] array) {
