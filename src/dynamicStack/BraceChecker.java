@@ -2,6 +2,8 @@ package dynamicStack;
 
 public class BraceChecker {
 
+    DynamicStack stack = new DynamicStack();
+
     private final String text;
 
     BraceChecker(String text) {
@@ -9,7 +11,6 @@ public class BraceChecker {
     }
 
     void check() {
-        DynamicStack stack = new DynamicStack();
 
         char lastChar;
 
@@ -19,10 +20,16 @@ public class BraceChecker {
                 char c = text.charAt(k);
 
                 switch (c) {
+
                     case '(':
                     case '{':
                     case '[':
-                        stack.push(c);
+                        if (k < text.length() - 1) {
+                            stack.push(c);
+                        } else {
+                            System.err.println("error at index " + k + ": Opening brace" + " '" + c + "'" + " does not have the closing one");
+                            break labelFor;
+                        }
                         break;
 
                     case ')':
