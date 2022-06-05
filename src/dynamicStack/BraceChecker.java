@@ -15,7 +15,7 @@ public class BraceChecker {
         char lastChar;
 
         if (text.length() > 1) {
-            labelFor:
+
             for (int k = 0; k < text.length(); k++) {
                 char c = text.charAt(k);
 
@@ -24,12 +24,7 @@ public class BraceChecker {
                     case '(':
                     case '{':
                     case '[':
-                        if (k < text.length() - 1) {
-                            stack.push(c);
-                        } else {
-                            System.err.println("error at index " + k + ": Opening brace" + " '" + c + "'" + " does not have the closing one");
-                            break labelFor;
-                        }
+                        stack.push(c);
                         break;
 
                     case ')':
@@ -38,12 +33,12 @@ public class BraceChecker {
                             if (lastChar == '(') {
                                 stack.pop();
                             } else {
-                                System.err.println("error at index " + k + ": closing brace" + " ')'" +  " is not matching the opening one " + "'" + lastChar + "'");
-                                break labelFor;
+                                System.err.println("error at index " + k + ": closing brace" + " ')'" + " is not matching the opening one " + "'" + lastChar + "'.");
+                                return;
                             }
                         } else {
-                            System.err.println("Cannot compare the last character...stack is empty");
-                            break labelFor;
+                            System.err.println("error at index " + k + ": Cannot compare the character " + "'" + c + "'" + " ... stack is empty.");
+                            return;
                         }
                         break;
 
@@ -53,12 +48,12 @@ public class BraceChecker {
                             if (lastChar == '{') {
                                 stack.pop();
                             } else {
-                                System.err.println("error at index " + k + ": closing brace" + " '}'" +  " is not matching the opening one " + "'" + lastChar + "'");
-                                break labelFor;
+                                System.err.println("error at index " + k + ": closing brace" + " '}'" + " is not matching the opening one " + "'" + lastChar + "'.");
+                                return;
                             }
                         } else {
-                            System.err.println("Cannot compare the last character...stack is empty");
-                            break labelFor;
+                            System.err.println("error at index " + k + ": Cannot compare the character " + "'" + c + "'" + " ... stack is empty.");
+                            return;
                         }
                         break;
 
@@ -68,17 +63,20 @@ public class BraceChecker {
                             if (lastChar == '[') {
                                 stack.pop();
                             } else {
-                                System.err.println("error at index " + k + ": closing brace" + " ']'" +  " is not matching the opening one " + "'" + lastChar + "'");
-                                break labelFor;
+                                System.err.println("error at index " + k + ": closing brace" + " ']'" + " is not matching the opening one " + "'" + lastChar + "'.");
+                                return;
                             }
                         } else {
-                            System.err.println("Cannot compare the last character...stack is empty");
-                            break labelFor;
+                            System.err.println("error at index " + k + ": Cannot compare the character " + "'" + c + "'" + " ... stack is empty.");
+                            return;
                         }
                         break;
                 }
             }
-        } else System.err.println("Need more than 1 character to check its validity");
+            if (!stack.isEmpty()) {
+                System.err.println("opening brace " + "'" + stack.lastChar() + "'" + " does not have the closing one.");
+            } else System.out.println("Brace Checker Validated successfully.");
+        } else System.err.println("Need more than 1 character to check its validity.");
     }
 
 }
