@@ -25,8 +25,8 @@ public class DynamicStack {
         stack = reserveArray;
     }
 
-    boolean isEmpty() {
-        return size == -1;
+    boolean isNotEmpty() {
+        return size != -1;
     }
 
 }
