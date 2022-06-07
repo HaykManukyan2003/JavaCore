@@ -5,6 +5,8 @@ public class BraceChecker {
     DynamicStack stack = new DynamicStack();
     private final String text;
 
+    private int openBraceIndex;
+
     BraceChecker(String text) {
         this.text = text;
     }
@@ -24,6 +26,7 @@ public class BraceChecker {
                     case '{':
                     case '[':
                         stack.push(c);
+                        openBraceIndex = k;
                         break;
 
                     case ')':
@@ -79,15 +82,15 @@ public class BraceChecker {
     }
 
     private void closingBraceError(int index, char lastChar, char currentChar) {
-        System.err.println("error at index " + index + ": closing brace " + "'" + currentChar + "'" + " is not matching the opening one " + "'" + lastChar + "'.");
+        System.err.printf("error at index %d: closing brace '%c' is not matching the opening one '%c'.", index, currentChar, lastChar);
     }
 
     private void cannotCompareError(int index, char c) {
-        System.err.println("error at index " + index + ": Cannot compare the character " + "'" + c + "'" + " ... stack is empty.");
+        System.err.printf("error at index %d: Cannot compare the character '%c' ... stack is empty.", index, c);
     }
 
     private void openingBraceError() {
-        System.err.println("opening brace " + "'" + stack.lastChar() + "'" + " does not have the closing one.");
+        System.err.printf("error at index %d: opening brace '%c' does not have the closing one." ,openBraceIndex, stack.lastChar());
     }
 
     private void validatedSuccessfully() {
