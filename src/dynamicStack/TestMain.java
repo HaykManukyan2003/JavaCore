@@ -4,7 +4,7 @@ public class TestMain {
 
     public static void main(String[] args) {
 
-        BraceChecker braceChecker = new BraceChecker("(hello) {java} {world");
+        BraceChecker braceChecker = new BraceChecker("{ } [ggYo");
         braceChecker.check();
 
     }

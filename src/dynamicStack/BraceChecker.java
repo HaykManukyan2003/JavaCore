@@ -4,10 +4,8 @@ public class BraceChecker {
 
     DynamicStack stack = new DynamicStack();
     private final String text;
-
-    private int openingBraceIndex = 0;
-
-    private final int[] openingBraceArray = new int[10];
+    private int braceArrayIndex;
+    private int[] openingBraceArray;
 
     BraceChecker(String text) {
         this.text = text;
@@ -19,6 +17,8 @@ public class BraceChecker {
 
         if (text.length() > 1) {
 
+            openingBraceArray = new int[text.length()];
+
             for (int k = 0; k < text.length(); k++) {
                 char c = text.charAt(k);
 
@@ -28,7 +28,7 @@ public class BraceChecker {
                     case '{':
                     case '[':
                         stack.push(c);
-                        openingBraceArray[openingBraceIndex++] = k;
+                        openingBraceArray[braceArrayIndex++] = k;
                         break;
 
                     case ')':
@@ -36,7 +36,7 @@ public class BraceChecker {
                             lastChar = stack.lastChar();
                             if (lastChar == '(') {
                                 stack.pop();
-                                openingBraceIndex--;
+                                braceArrayIndex--;
                             } else {
                                 closingBraceError(k, lastChar, c);
                                 return;
@@ -52,7 +52,7 @@ public class BraceChecker {
                             lastChar = stack.lastChar();
                             if (lastChar == '{') {
                                 stack.pop();
-                                openingBraceIndex--;
+                                braceArrayIndex--;
                             } else {
                                 closingBraceError(k, lastChar, c);
                                 return;
@@ -68,7 +68,7 @@ public class BraceChecker {
                             lastChar = stack.lastChar();
                             if (lastChar == '[') {
                                 stack.pop();
-                                openingBraceIndex--;
+                                braceArrayIndex--;
                             } else {
                                 closingBraceError(k, lastChar, c);
                                 return;
@@ -95,7 +95,7 @@ public class BraceChecker {
     }
 
     private void openingBraceError() {
-        System.err.printf("error at index %d: opening brace '%c' does not have the closing one.", openingBraceArray[--openingBraceIndex], stack.lastChar());
+        System.err.printf("error at index %d: opening brace '%c' does not have the closing one.", openingBraceArray[--braceArrayIndex], stack.lastChar());
     }
 
     private void validatedSuccessfully() {
