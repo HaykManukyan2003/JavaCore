@@ -35,6 +35,9 @@ public class DynamicArray {
     }
 
     public void insert(int index, int value) {
+        if (size == array.length) {
+            extend();
+        }
         for (int k = size - 1; k >= index; k--) {
             array[k + 1] = array[k];
         }
