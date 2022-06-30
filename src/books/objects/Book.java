@@ -1,17 +1,17 @@
-package books;
+package books.objects;
 
 public class Book {
 
     private String title;
-    private String authorName;
+    private Author author;
     private String genre;
     private double price;
 
     public Book() {}
 
-    public Book(String title, String authorName, String genre, double price) {
+    public Book(String title, Author author, String genre, double price) {
         this.title = title;
-        this.authorName = authorName;
+        this.author = author;
         this.genre = genre;
         this.price = price;
     }
@@ -24,12 +24,12 @@ public class Book {
         this.title = title;
     }
 
-    public String getAuthorName() {
-        return authorName;
+    public Author getAuthor() {
+        return author;
     }
 
-    public void setAuthorName(String authorName) {
-        this.authorName = authorName;
+    public void setAuthor(Author author) {
+        this.author = author;
     }
 
     public String getGenre() {
@@ -45,6 +45,9 @@ public class Book {
     }
 
     public void setPrice(double price) {
+        if (price < 0.0) {
+            throw new IllegalArgumentException("price can't be less than 0.0");
+        }
         this.price = price;
     }
 
@@ -52,7 +55,7 @@ public class Book {
     public String toString() {
         return "Book{" +
                 "title='" + title + '\'' +
-                ", authorName='" + authorName + '\'' +
+                ", author='" + author + '\'' +
                 ", genre='" + genre + '\'' +
                 ", price=" + price +
                 '}';

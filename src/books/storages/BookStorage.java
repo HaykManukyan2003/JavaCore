@@ -1,4 +1,6 @@
-package books;
+package books.storages;
+
+import books.objects.Book;
 
 public class BookStorage {
 
@@ -19,6 +21,11 @@ public class BookStorage {
     }
 
     public void displayAllBooks() {
+        if (count == 0) {
+            System.err.println("No books in library");
+            return;
+        }
+
         for (int k = 0; k < count; k++) {
             System.out.println(k + ": " + storage[k]);
         }
@@ -27,7 +34,7 @@ public class BookStorage {
     public void displayBooksByAuthorName(String authorName) {
         int matches = 0;
         for (int k = 0; k < count; k++) {
-            if (storage[k].getAuthorName().equalsIgnoreCase(authorName)) {
+            if (storage[k].getAuthor().getName().equalsIgnoreCase(authorName)) {
                 System.out.println(storage[k]);
                 matches++;
             }
@@ -44,12 +51,11 @@ public class BookStorage {
             }
         }
         matchCount(matches);
-
     }
 
     public void priceRangeSearch(double minimumRange, double maximumRange) {
         int matches = 0;
-        if (minimumRange < maximumRange && minimumRange >= 0.0 && maximumRange >= 0.1) {
+        if (minimumRange < maximumRange && !(minimumRange < 0.0)) {
             for (int k = 0; k < count; k++) {
                 if (storage[k].getPrice() >= minimumRange && storage[k].getPrice() <= maximumRange) {
                     System.out.println(storage[k]);
@@ -68,7 +74,7 @@ public class BookStorage {
     private void matchCount(int matches) {
         if (matches > 1) System.out.println("found " + matches + " matches" + "\n");
         else if (matches == 1) System.out.println("found 1 match" + "\n");
-        else System.out.println("no match found" + "\n");
+        else System.err.println("no match found" + "\n");
     }
 
 }
