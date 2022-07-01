@@ -45,8 +45,9 @@ public class TestDemo implements Commands {
                     break;
                 case DISPLAY_BOOKS_BY_PRICE_RANGE:
                     commandRequest(command);
-                    double min, max;
-                    bookStorage.priceRangeSearch(min = Double.parseDouble(scanner.nextLine()), max = Double.parseDouble(scanner.nextLine()));
+                    double min = Double.parseDouble(scanner.nextLine());
+                    double max = Double.parseDouble(scanner.nextLine());
+                    bookStorage.priceRangeSearch(min, max);
                     break;
                 default:
                     System.err.println("unreachable command, try again...");
@@ -68,7 +69,13 @@ public class TestDemo implements Commands {
         String genre = scanner.nextLine();
 
         System.out.println("Input price");
-        double price = price();
+        double price = 0.0;
+        try {
+            price = price();
+        } catch (IllegalArgumentException e) {
+            System.err.println("illegal argument, couldn't convert input to number:" +
+                    " value for 'price' put to 0.0 due to error");
+        }
 
         Book book = new Book(bookTitle, author, genre, price);
         System.out.println(book);
@@ -98,17 +105,12 @@ public class TestDemo implements Commands {
     }
 
     private static String gender() {
-        String gender = null;
-        try {
-            gender = scanner.nextLine();
+        do {
+            String gender = scanner.nextLine();
             if (!gender.equalsIgnoreCase("male") && !gender.equalsIgnoreCase("female")) {
-                throw new IllegalArgumentException("wrong input for gender: ");
-            }
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage() + "try again");
-            gender();
-        }
-        return gender;
+                System.err.println("wrong input for gender ... try again");
+            } else return gender;
+        } while (true);
     }
 
     private static void commandRequest(int command) {
@@ -135,20 +137,12 @@ public class TestDemo implements Commands {
     }
 
     private static double price() {
-        double price = 0.0;
-        try {
-            price = Double.parseDouble(scanner.nextLine());
-            if (price < 0.0) {
-                throw new IllegalArgumentException("price can't be less than 0.0: ");
-            }
-        } catch (NumberFormatException e) {
-            System.err.println("wrong input: couldn't convert value to double ... try again");
-            price();
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage() + "can't input negative value for price ... try again");
-            price();
-        }
-        return price;
+        do {
+            double price = Double.parseDouble(scanner.nextLine());
+            if (price <= -0.0) {
+                System.err.println("can't input negative value for price ... try again");
+            } else return price;
+        } while (true);
     }
 
 }

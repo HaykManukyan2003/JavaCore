@@ -45,17 +45,16 @@ public class Book {
     }
 
     public void setPrice(double price) {
-        if (price < 0.0) {
-            throw new IllegalArgumentException("price can't be less than 0.0");
-        }
-        this.price = price;
+        if (price <= -0.0) {
+            System.err.println("price can't be less than 0.0");
+        } else this.price = price;
     }
 
     @Override
     public String toString() {
         return "Book{" +
-                "title='" + title + '\'' +
-                ", author='" + author + '\'' +
+                "title='" + title + '\''
+                + ", " + author + '\'' +
                 ", genre='" + genre + '\'' +
                 ", price=" + price +
                 '}';
