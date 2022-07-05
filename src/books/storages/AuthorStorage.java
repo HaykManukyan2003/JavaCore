@@ -1,5 +1,6 @@
 package books.storages;
 
+import books.exceptions.AuthorNotFoundException;
 import books.objects.Author;
 
 public class AuthorStorage {
@@ -24,6 +25,16 @@ public class AuthorStorage {
         for (int k = 0; k < count; k++) {
             System.out.println(k + ": " + storage[k]);
         }
+    }
+
+    public void getAuthorByIndex(int index) {
+        if (index < 0) {
+            System.err.println("failed to search: index cannot be negative");
+        } else if (index >= count) {
+            throw new AuthorNotFoundException("Cannot find the Author: unreachable index has been given.");
+        } else if (storage[index] == null) {
+            throw new AuthorNotFoundException("Cannot find the Author: value of corresponding index is Null");
+        } else System.out.println(storage[index]);
     }
 
     public void displayAuthorsByGender(String gender) {

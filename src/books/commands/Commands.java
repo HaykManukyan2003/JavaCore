@@ -8,6 +8,7 @@ public interface Commands {
     int DISPLAY_BOOKS_BY_AUTHOR_NAME = 3;
     int DISPLAY_BOOKS_BY_PRICE_RANGE = 4;
     int DISPLAY_BOOKS_BY_GENRE = 5;
+    int DISPLAY_AUTHORS_BY_INDEX = 6;
 
     static void commandRequests() {
         System.out.println("Input '0' to exit the program");
@@ -16,6 +17,7 @@ public interface Commands {
         System.out.println("Input '3' to search books by author name");
         System.out.println("Input '4' to search books by price range");
         System.out.println("Input '5' to search books by genre");
+        System.out.println("Input '6' to get author by index");
         System.out.println();
     }
 

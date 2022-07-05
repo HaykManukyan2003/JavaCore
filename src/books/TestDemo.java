@@ -1,6 +1,7 @@
 package books;
 
 import books.commands.Commands;
+import books.exceptions.AuthorNotFoundException;
 import books.objects.Author;
 import books.objects.Book;
 import books.storages.AuthorStorage;
@@ -23,7 +24,11 @@ public class TestDemo implements Commands {
 
             Commands.commandRequests();
 
-            command = Integer.parseInt(scanner.nextLine());
+            try {
+                command = Integer.parseInt(scanner.nextLine());
+            } catch (NumberFormatException e) {
+                command = -1;
+            }
 
             switch (command) {
                 case EXIT:
@@ -45,9 +50,28 @@ public class TestDemo implements Commands {
                     break;
                 case DISPLAY_BOOKS_BY_PRICE_RANGE:
                     commandRequest(command);
-                    double min = Double.parseDouble(scanner.nextLine());
-                    double max = Double.parseDouble(scanner.nextLine());
+                    double min;
+                    double max;
+                    try {
+                        min = Double.parseDouble(scanner.nextLine());
+                        max = Double.parseDouble(scanner.nextLine());
+                    } catch (NumberFormatException e) {
+                        System.err.println("conversion failed: Integer expected");
+                        min = 0.00;
+                        max = 0.00;
+                    }
                     bookStorage.priceRangeSearch(min, max);
+                    break;
+                case DISPLAY_AUTHORS_BY_INDEX:
+                    commandRequest(command);
+                    authorStorage.displayAuthors();
+                    try {
+                        getAuthorByIndex();
+                    } catch (NumberFormatException e) {
+                        System.err.println("conversion failed: should be a number");
+                    } catch (AuthorNotFoundException e) {
+                        System.err.println(e);
+                    }
                     break;
                 default:
                     System.err.println("unreachable command, try again...");
@@ -104,6 +128,11 @@ public class TestDemo implements Commands {
         return author;
     }
 
+    private static void getAuthorByIndex() {
+        int index = Integer.parseInt(scanner.nextLine());
+        authorStorage.getAuthorByIndex(index);
+    }
+
     private static String gender() {
         do {
             String gender = scanner.nextLine();
@@ -123,6 +152,9 @@ public class TestDemo implements Commands {
         if (command == DISPLAY_BOOKS_BY_PRICE_RANGE) {
             System.out.println("input the minimum and maximum price to start the range search");
         }
+        if (command == DISPLAY_AUTHORS_BY_INDEX) {
+            System.out.println("choose index");
+        }
     }
 
     private static String valueFromScanner(int command) {
@@ -139,7 +171,7 @@ public class TestDemo implements Commands {
     private static double price() {
         do {
             double price = Double.parseDouble(scanner.nextLine());
-            if (price <= -0.0) {
+            if (price < 0.0) {
                 System.err.println("can't input negative value for price ... try again");
             } else return price;
         } while (true);
