@@ -27,7 +27,7 @@ public class AuthorStorage {
         }
     }
 
-    public void getAuthorByIndex(int index) {
+    public void getAuthorByIndex(int index) throws AuthorNotFoundException {
         if (index < 0) {
             System.err.println("failed to search: index cannot be negative");
         } else if (index >= count) {

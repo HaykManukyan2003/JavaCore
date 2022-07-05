@@ -1,6 +1,6 @@
 package books.exceptions;
 
-public class AuthorNotFoundException extends RuntimeException {
+public class AuthorNotFoundException extends Exception {
 
     public AuthorNotFoundException() {
     }

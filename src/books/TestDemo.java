@@ -128,7 +128,7 @@ public class TestDemo implements Commands {
         return author;
     }
 
-    private static void getAuthorByIndex() {
+    private static void getAuthorByIndex() throws AuthorNotFoundException {
         int index = Integer.parseInt(scanner.nextLine());
         authorStorage.getAuthorByIndex(index);
     }
