@@ -45,7 +45,7 @@ public class Book {
     }
 
     public void setPrice(double price) {
-        if (price <= -0.0) {
+        if (price < 0.0) {
             System.err.println("price can't be less than 0.0");
         } else this.price = price;
     }
