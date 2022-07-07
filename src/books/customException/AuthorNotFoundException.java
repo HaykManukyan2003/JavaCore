@@ -1,4 +1,4 @@
-package books.exceptions;
+package books.customException;
 
 public class AuthorNotFoundException extends Exception {
 

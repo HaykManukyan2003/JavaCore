@@ -1,14 +1,13 @@
 package books;
 
 import books.commands.Commands;
-import books.enums.Gender;
-import books.exceptions.AuthorNotFoundException;
-import books.objects.Author;
-import books.objects.Book;
-import books.storages.AuthorStorage;
-import books.storages.BookStorage;
+import books.enumeration.Gender;
+import books.customException.AuthorNotFoundException;
+import books.model.Author;
+import books.model.Book;
+import books.storage.AuthorStorage;
+import books.storage.BookStorage;
 
-import java.util.Objects;
 import java.util.Scanner;
 
 public class TestDemo implements Commands {
@@ -168,7 +167,7 @@ public class TestDemo implements Commands {
             System.out.println();
 
             String input = scanner.nextLine();
-            if (!(Objects.equals(input, Gender.Male.name())) && !(Objects.equals(input, Gender.Female.name()))) {
+            if (!(input.equals(Gender.Male.name())) && !(input.equals(Gender.Female.name()))) {
                 System.err.println("no such option: try again");
             } else {
                 return Gender.valueOf(input);

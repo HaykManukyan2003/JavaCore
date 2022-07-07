@@ -1,4 +1,4 @@
-package books.enums;
+package books.enumeration;
 
 public enum Gender {
 

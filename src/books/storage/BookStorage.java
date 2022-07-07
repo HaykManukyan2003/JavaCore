@@ -1,6 +1,6 @@
-package books.storages;
+package books.storage;
 
-import books.objects.Book;
+import books.model.Book;
 
 public class BookStorage {
 

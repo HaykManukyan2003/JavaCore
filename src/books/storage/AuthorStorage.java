@@ -1,7 +1,7 @@
-package books.storages;
+package books.storage;
 
-import books.exceptions.AuthorNotFoundException;
-import books.objects.Author;
+import books.customException.AuthorNotFoundException;
+import books.model.Author;
 
 public class AuthorStorage {
 

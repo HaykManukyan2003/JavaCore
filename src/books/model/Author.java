@@ -1,6 +1,6 @@
-package books.objects;
+package books.model;
 
-import books.enums.Gender;
+import books.enumeration.Gender;
 
 public class Author {
 
