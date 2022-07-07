@@ -1,12 +1,14 @@
 package books;
 
 import books.commands.Commands;
+import books.enums.Gender;
 import books.exceptions.AuthorNotFoundException;
 import books.objects.Author;
 import books.objects.Book;
 import books.storages.AuthorStorage;
 import books.storages.BookStorage;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class TestDemo implements Commands {
@@ -15,7 +17,9 @@ public class TestDemo implements Commands {
     private static final AuthorStorage authorStorage = new AuthorStorage();
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthorNotFoundException {
+
+        logIn();
 
         boolean isRunning = true;
         int command;
@@ -39,6 +43,7 @@ public class TestDemo implements Commands {
                     break;
                 case DISPLAY_ALL_BOOKS:
                     bookStorage.displayAllBooks();
+                    System.out.println();
                     break;
                 case DISPLAY_BOOKS_BY_AUTHOR_NAME:
                     commandRequest(command);
@@ -62,29 +67,53 @@ public class TestDemo implements Commands {
                     }
                     bookStorage.priceRangeSearch(min, max);
                     break;
-                case DISPLAY_AUTHORS_BY_INDEX:
-                    commandRequest(command);
+                case ADD_AUTHOR:
+                    addAuthor();
+                    break;
+                case DISPLAY_AUTHORS:
                     authorStorage.displayAuthors();
-                    try {
-                        getAuthorByIndex();
-                    } catch (NumberFormatException e) {
-                        System.err.println("conversion failed: should be a number");
-                    } catch (AuthorNotFoundException e) {
-                        System.err.println(e);
-                    }
+                    System.out.println();
                     break;
                 default:
-                    System.err.println("unreachable command, try again...");
+                    System.err.println("invalid command, try again...");
             }
 
         }
 
     }
 
-    private static void addABook() {
+    private static void logIn() {
+        do {
+            System.out.println("Login: ");
+            String login = scanner.nextLine();
+            System.out.println("Password: ");
+            String password = scanner.nextLine();
+            if (!(login.equals("admin")) || !(password.equals("123456"))) {
+                System.err.println("access denied: invalid login or password.");
+            } else {
+                System.out.println("logged in" + "\n");
+                return;
+            }
+        } while (true);
+    }
 
-        System.out.println("Author's Info");
-        Author author = addAuthor();
+    private static void addABook() {
+        Author author;
+        if (authorStorage.getCount() == 0) {
+            System.err.println("cannot create a book without an Author");
+            System.out.println("Create author first" + "\n");
+            author = addAuthor();
+        } else {
+            try {
+                author = getAuthorByIndex();
+            } catch (AuthorNotFoundException e) {
+                System.err.println(e.getMessage());
+                return;
+            } catch (NumberFormatException e) {
+                System.err.println("failed to convert value of input to number.");
+                return;
+            }
+        }
 
         System.out.println("Input book title");
         String bookTitle = scanner.nextLine();
@@ -93,12 +122,13 @@ public class TestDemo implements Commands {
         String genre = scanner.nextLine();
 
         System.out.println("Input price");
-        double price = 0.0;
+        double price;
         try {
             price = price();
-        } catch (IllegalArgumentException e) {
-            System.err.println("illegal argument, couldn't convert input to number:" +
-                    " value for 'price' put to 0.0 due to error");
+        } catch (NumberFormatException e) {
+            System.err.println("failed to convert value of input to number.");
+            System.out.println("value for price was automatically put to 0.00 due to error" + "\n");
+            price = 0.00;
         }
 
         Book book = new Book(bookTitle, author, genre, price);
@@ -118,27 +148,31 @@ public class TestDemo implements Commands {
         System.out.println("input email");
         String email = scanner.nextLine();
 
-        System.out.println("input gender");
-        String gender = gender();
+        Gender gender = gender();
 
         Author author = new Author(name, surname, email, gender);
         System.out.println(author);
         authorStorage.push(author);
+        System.out.println();
 
         return author;
     }
 
-    private static void getAuthorByIndex() throws AuthorNotFoundException {
-        int index = Integer.parseInt(scanner.nextLine());
-        authorStorage.getAuthorByIndex(index);
-    }
-
-    private static String gender() {
+    private static Gender gender() {
         do {
-            String gender = scanner.nextLine();
-            if (!gender.equalsIgnoreCase("male") && !gender.equalsIgnoreCase("female")) {
-                System.err.println("wrong input for gender ... try again");
-            } else return gender;
+            System.out.println("Select gender");
+            Gender[] values = Gender.values();
+            for (Gender value : values) {
+                System.out.print(value + "   ");
+            }
+            System.out.println();
+
+            String input = scanner.nextLine();
+            if (!(Objects.equals(input, Gender.Male.name())) && !(Objects.equals(input, Gender.Female.name()))) {
+                System.err.println("no such option: try again");
+            } else {
+                return Gender.valueOf(input);
+            }
         } while (true);
     }
 
@@ -151,9 +185,6 @@ public class TestDemo implements Commands {
         }
         if (command == DISPLAY_BOOKS_BY_PRICE_RANGE) {
             System.out.println("input the minimum and maximum price to start the range search");
-        }
-        if (command == DISPLAY_AUTHORS_BY_INDEX) {
-            System.out.println("choose index");
         }
     }
 
@@ -169,12 +200,22 @@ public class TestDemo implements Commands {
     }
 
     private static double price() {
+        int attempts = 1;
         do {
             double price = Double.parseDouble(scanner.nextLine());
             if (price < 0.0) {
-                System.err.println("can't input negative value for price ... try again");
+                System.err.println("attempt " + attempts + "/3 : " + "cannot input negative value for price.");
             } else return price;
-        } while (true);
+        } while (++attempts <= 3);
+        System.err.println("All attempts to sign a value for price were failed: price automatically put to 0.00");
+        return 0.00;
+    }
+
+    private static Author getAuthorByIndex() throws AuthorNotFoundException {
+        System.out.println("Which author you want for this book? choose an index");
+        authorStorage.displayAuthors();
+        int index = Integer.parseInt(scanner.nextLine());
+        return authorStorage.getAuthorByIndex(index);
     }
 
 }

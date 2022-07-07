@@ -1,18 +1,22 @@
 package books.objects;
 
+import books.enums.Gender;
+
 public class Author {
 
     private String name;
     private String surname;
     private String email;
-    private String gender;
+    private Gender gender;
 
-    public Author() {}
-    public Author(String name, String surname, String email, String gender) {
+    public Author() {
+    }
+
+    public Author(String name, String surname, String email, Gender gender) {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.gender = gender;
+        this.gender = Gender.valueOf(String.valueOf(gender));
     }
 
     public String getName() {
@@ -39,12 +43,12 @@ public class Author {
         this.email = email;
     }
 
-    public String getGender() {
+    public Gender getGender() {
         return gender;
     }
 
     public void setGender(String gender) {
-        this.gender = gender;
+        this.gender = Gender.valueOf(gender);
     }
 
     @Override

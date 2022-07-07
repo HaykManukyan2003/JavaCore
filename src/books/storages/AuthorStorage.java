@@ -15,42 +15,33 @@ public class AuthorStorage {
         storage[count++] = author;
     }
 
-    private void extend() {
-        Author[] reserveArray = new Author[storage.length * 2];
-        System.arraycopy(storage, 0, reserveArray, 0, count);
-        storage = reserveArray;
-    }
-
     public void displayAuthors() {
+        if (count == 0) {
+            System.err.println("found 0 authors in authorStorage.");
+        }
         for (int k = 0; k < count; k++) {
             System.out.println(k + ": " + storage[k]);
         }
     }
 
-    public void getAuthorByIndex(int index) throws AuthorNotFoundException {
-        if (index < 0) {
-            System.err.println("failed to search: index cannot be negative");
-        } else if (index >= count) {
+    public Author getAuthorByIndex(int index) throws AuthorNotFoundException {
+        if (index >= count || index < 0) {
             throw new AuthorNotFoundException("Cannot find the Author: unreachable index has been given.");
-        } else if (storage[index] == null) {
-            throw new AuthorNotFoundException("Cannot find the Author: value of corresponding index is Null");
-        } else System.out.println(storage[index]);
-    }
-
-    public void displayAuthorsByGender(String gender) {
-        int matches = 0;
-        for (int k = 0; k < count; k++) {
-            if (storage[k].getGender().equalsIgnoreCase(gender)) {
-                System.out.println(storage[k]);
-                matches++;
-            }
         }
-        matchCount(matches);
+        if (storage[index] == null) {
+            throw new AuthorNotFoundException("Cannot find the Author: object of corresponding index is Null");
+        }
+        return storage[index];
     }
 
     public int getCount() {
-        System.out.print("author count: ");
         return count;
+    }
+
+    private void extend() {
+        Author[] reserveArray = new Author[storage.length * 2];
+        System.arraycopy(storage, 0, reserveArray, 0, count);
+        storage = reserveArray;
     }
 
     private void matchCount(int matches) {
@@ -58,5 +49,4 @@ public class AuthorStorage {
         else if (matches == 1) System.out.println("found 1 match" + "\n");
         else System.err.println("no match found" + "\n");
     }
-
 }
