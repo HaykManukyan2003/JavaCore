@@ -167,10 +167,14 @@ public class TestDemo implements Commands {
             System.out.println();
 
             String input = scanner.nextLine();
-            if (!(input.equals(Gender.Male.name())) && !(input.equals(Gender.Female.name()))) {
+            try {
+                if (!(Gender.valueOf(input).equals(Gender.Male)) && !(Gender.valueOf(input).equals(Gender.Female))) {
+                    throw new IllegalArgumentException();
+                } else {
+                    return Gender.valueOf(input);
+                }
+            } catch (IllegalArgumentException e) {
                 System.err.println("no such option: try again");
-            } else {
-                return Gender.valueOf(input);
             }
         } while (true);
     }
