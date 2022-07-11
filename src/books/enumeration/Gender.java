@@ -2,7 +2,7 @@ package books.enumeration;
 
 public enum Gender {
 
-    Male,
-    Female;
+    MALE,
+    FEMALE;
 
 }
