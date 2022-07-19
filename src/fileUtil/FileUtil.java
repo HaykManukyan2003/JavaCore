@@ -12,7 +12,7 @@ public class FileUtil {
     public static void main(String[] args) throws IOException {
 
         //fileSearch();
-        //contentSearch();
+        //recursiveContentSearch(new File("C:\\Users\\Nare\\IdeaProjects\\javaCore\\src\\chapter13\\IOandTryWithResources\\testFolder\\"), "java");
         //findLines();
         //printSizeOfPackage();
         //createFileWithContent();
@@ -24,33 +24,13 @@ public class FileUtil {
         System.out.println("Input file name");
         String fileName = input.nextLine();
 
-        File newFile = new File(path);
-        if (newFile.isDirectory()) {
-            File[] files = newFile.listFiles();
-            assert files != null;
-            for (File file : files) {
-                if (file.getName().equals(fileName) && file.isFile()) {
-                    System.out.println(true);
-                    return;
-                }
-            }
-            System.out.println(false);
-        } else System.out.println(false);
+        File newFile = new File(path, fileName);
+        System.out.println(newFile.exists());
     }
 
     // -------------------------------------------------------------------------
 
-    static void contentSearch() {
-        System.out.println("Input directory path");
-        String directoryPath = input.nextLine();
-        System.out.println("Input keyword you want to search in files");
-        String keyword = input.nextLine();
-        File filePath = new File(directoryPath);
-
-        recursiveFileSearch(filePath, keyword);
-    }
-
-    private static void recursiveFileSearch(File filePath, String keyword) {
+    private static void recursiveContentSearch(File filePath, String keyword) {
         if (filePath.isDirectory()) {
             File[] files = filePath.listFiles();
             assert files != null;
@@ -68,7 +48,7 @@ public class FileUtil {
                         System.out.println(e.getMessage());
                     }
                 } else if (file.isDirectory()) {
-                    recursiveFileSearch(file, keyword);
+                    recursiveContentSearch(file, keyword);
                 }
             }
         }
@@ -83,15 +63,12 @@ public class FileUtil {
         String keyword = input.nextLine();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+            int rowCount = 0;
             String text;
-            int line = 0;
             while ((text = reader.readLine()) != null) {
-                Scanner scanner = new Scanner(filePath);
-                if (scanner.hasNextLine()) {
-                    line++;
-                }
+                rowCount++;
                 if (text.contains(keyword)) {
-                    System.out.println(line + ": " + text);
+                    System.out.println(rowCount + ": " + text);
                 }
             }
         } catch (IOException e) {
@@ -106,14 +83,14 @@ public class FileUtil {
         String folderPath = input.nextLine();
 
         File newFile = new File(folderPath);
-        double folderSize = 0;
+        long folderSize = 0;
         if (newFile.isDirectory()) {
             File[] files = newFile.listFiles();
             assert files != null;
             for (File file : files) {
                 folderSize += file.length();
             }
-            System.out.println("folderSize: " + folderSize);
+            System.out.println("folderSize: " + folderSize + "kb");
         }
     }
 
