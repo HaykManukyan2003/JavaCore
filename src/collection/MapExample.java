@@ -17,6 +17,7 @@ public class MapExample {
         Map<Integer, String> footballTeam = createFootballTeam(players);
         System.out.println(footballTeam);
 
+
         HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(3, "gg");
         hashMap.put(5, "dd");
