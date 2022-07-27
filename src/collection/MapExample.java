@@ -51,12 +51,16 @@ public class MapExample {
     }
 
     static void printAllMembers(Map<Integer, String> memberMap) {
-        Iterator<Integer> integerIterator = memberMap.keySet().iterator();
-        Iterator<String> stringIterator = memberMap.values().iterator();
-        while (integerIterator.hasNext() && stringIterator.hasNext()) {
-            System.out.print(integerIterator.next() + " - ");
-            System.out.println(stringIterator.next());
+        for (Map.Entry<Integer, String> entry : memberMap.entrySet()) {
+            System.out.println(entry.getKey() + " - " + entry.getValue());
         }
+//        // another variation;
+//        Iterator<Integer> integerIterator = memberMap.keySet().iterator();
+//        Iterator<String> stringIterator = memberMap.values().iterator();
+//        while (integerIterator.hasNext() && stringIterator.hasNext()) {
+//            System.out.print(integerIterator.next() + " - ");
+//            System.out.println(stringIterator.next());
+//        }
     }
 
     static class FootballTeamMember {
