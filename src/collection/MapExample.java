@@ -17,7 +17,6 @@ public class MapExample {
         Map<Integer, String> footballTeam = createFootballTeam(players);
         System.out.println(footballTeam);
 
-
         HashMap<Integer, String> hashMap = new HashMap<>();
         hashMap.put(3, "gg");
         hashMap.put(5, "dd");
@@ -25,7 +24,7 @@ public class MapExample {
 
         printAllMembers(hashMap);
         printAllMemberNames(hashMap);
-        boolean isRemoved = removeFromMap(hashMap, 36);
+        boolean isRemoved = removeFromMap(hashMap, 34);
         System.out.println(isRemoved);
 
     }
@@ -39,11 +38,8 @@ public class MapExample {
     }
 
     static boolean removeFromMap(Map<Integer, String> memberMap, Integer numberToRemove) {
-        if (memberMap.containsKey(numberToRemove)) {
-            memberMap.remove(numberToRemove);
-            return true;
-        }
-        return false;
+        String value = memberMap.remove(numberToRemove);
+        return value != null;
     }
 
     static void printAllMemberNames(Map<Integer, String> memberMap) {
@@ -54,13 +50,6 @@ public class MapExample {
         for (Map.Entry<Integer, String> entry : memberMap.entrySet()) {
             System.out.println(entry.getKey() + " - " + entry.getValue());
         }
-//        // another variation;
-//        Iterator<Integer> integerIterator = memberMap.keySet().iterator();
-//        Iterator<String> stringIterator = memberMap.values().iterator();
-//        while (integerIterator.hasNext() && stringIterator.hasNext()) {
-//            System.out.print(integerIterator.next() + " - ");
-//            System.out.println(stringIterator.next());
-//        }
     }
 
     static class FootballTeamMember {
