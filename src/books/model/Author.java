@@ -2,21 +2,27 @@ package books.model;
 
 import books.enumeration.Gender;
 
+import java.util.Date;
+
+import static books.util.DateUtil.dateToString;
+
 public class Author {
 
     private String name;
     private String surname;
     private String email;
     private Gender gender;
+    private Date registeredDate;
 
     public Author() {
     }
 
-    public Author(String name, String surname, String email, Gender gender) {
+    public Author(String name, String surname, String email, Gender gender, Date registeredDate) {
         this.name = name;
         this.surname = surname;
         this.email = email;
         this.gender = Gender.valueOf(String.valueOf(gender));
+        this.registeredDate = registeredDate;
     }
 
     public String getName() {
@@ -51,6 +57,18 @@ public class Author {
         this.gender = Gender.valueOf(gender);
     }
 
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Date getRegisteredDate() {
+        return registeredDate;
+    }
+
+    public void setRegisteredDate(Date registeredDate) {
+        this.registeredDate = registeredDate;
+    }
+
     @Override
     public String toString() {
         return "Author{" +
@@ -58,6 +76,7 @@ public class Author {
                 ", surname='" + surname + '\'' +
                 ", email=" + email +
                 ", gender='" + gender + '\'' +
+                ", registeredDate='" + dateToString(registeredDate) + '\'' +
                 '}';
     }
 

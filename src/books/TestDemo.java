@@ -11,6 +11,7 @@ import books.storage.AuthorStorage;
 import books.storage.BookStorage;
 import books.storage.UserStorage;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class TestDemo implements Commands {
@@ -87,6 +88,7 @@ public class TestDemo implements Commands {
                 user.setPassword(userData[3]);
                 user.setRole(Role.USER);
                 userStorage.push(user);
+                System.out.println(user);
                 System.out.println("Registration completed successfully" + "\n");
             } else {
                 System.err.println("An account with email '" + userData[2] + "' already exists");
@@ -120,7 +122,7 @@ public class TestDemo implements Commands {
                     commandRequest(command);
                     bookStorage.displayBooksByAuthorName(valueFromScanner(command));
                     break;
-                case DISPLAY_BOOKS_BY_GENRE_BY_GENRE:
+                case DISPLAY_BOOKS_BY_GENRE_BY_USER:
                     commandRequest(command);
                     bookStorage.displayBooksByGenre(valueFromScanner(command));
                     break;
@@ -259,7 +261,7 @@ public class TestDemo implements Commands {
 
         Gender gender = gender();
 
-        Author author = new Author(name, surname, email, gender);
+        Author author = new Author(name, surname, email, gender, new Date());
         System.out.println(author);
         authorStorage.push(author);
         System.out.println();

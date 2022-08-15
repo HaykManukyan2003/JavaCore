@@ -31,7 +31,7 @@ public interface Commands {
     int DISPLAY_ALL_BOOKS_BY_USER = 2;
     int DISPLAY_BOOKS_BY_AUTHOR_NAME_BY_USER = 3;
     int DISPLAY_BOOKS_BY_PRICE_RANGE_BY_USER = 4;
-    int DISPLAY_BOOKS_BY_GENRE_BY_GENRE = 5;
+    int DISPLAY_BOOKS_BY_GENRE_BY_USER = 5;
 
     static void commandRequestsForUser() {
         System.out.println("Input '0' to log out");
